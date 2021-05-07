@@ -5,7 +5,7 @@ import Homepage from './components/homepage/homepage.component';
 import { ModalStoryContextProvider } from './context/modal-story.context';
 import { UserContext } from './context/user.context';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
-import SignInAndSignUp from './page/sign-in-and-sign-up./sign-in-and-sign-up.component';
+import SignInAndSignUp from './page/sign-in-and-sign-up/sign-in-and-sign-up.component.jsx';
 import StoriesPage from './page/stories-page/stories.component';
 
 

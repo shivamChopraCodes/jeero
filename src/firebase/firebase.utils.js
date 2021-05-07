@@ -1,10 +1,18 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
-import Config from './firebase.config';
+
+const config = {
+  apiKey: "AIzaSyBQD4baZZ7rBWQ4Oeln_Gy5SMJ9fQDXhIw",
+  authDomain: "jeero-db.firebaseapp.com",
+  projectId: "jeero-db",
+  storageBucket: "jeero-db.appspot.com",
+  messagingSenderId: "353837388230",
+  appId: "1:353837388230:web:b8f2984ca7f7283ee362c7"
+};
 
 
-firebase.initializeApp(Config);
+firebase.initializeApp(config);
 const createFirebaseTimestamp = () => {
   return firebase.firestore.Timestamp.fromDate(new Date())
 }

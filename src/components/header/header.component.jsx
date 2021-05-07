@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
-import { logData } from '../../firebase/firebase.utils';
+import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { UserContext } from '../../context/user.context';
+import { auth } from '../../firebase/firebase.utils';
 
 const Header = () =>{
-    useEffect(()=>{
-    let userref = logData();
-    console.log(userref)
-    });
+    let [currentUser,setCurrentUser] = useContext(UserContext)
 
     return (
         <div className='header bg-blue-800 text-gray-50 ' >
@@ -13,8 +12,12 @@ const Header = () =>{
                 <p className='text-3xl' >Logo</p>
                 <div className='flex flex-row ' >
                     <a  href='/dashboards' className ='text-xl px-2 '> Home </a>
-                    <p className ='text-xl px-2'> Profile </p>
-                    <p className ='text-xl px-2 '> Logout </p> 
+                    { 
+            currentUser ?
+            <Link  className='text-xl px-2 capitalize' onClick={ async ()=> await auth.signOut()}>SIGN OUT</Link>
+            :
+            <Link className='text-xl px-2 capitalize' to='/signin'>SIGN IN</Link>
+          }
 
                 </div>
             </nav>

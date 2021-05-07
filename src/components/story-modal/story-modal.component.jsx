@@ -34,12 +34,13 @@ const StoryModal = ({ modalStory, setModalStory, updateModalStory, deleteModalSt
         }
     }
 
-    const handleDelete = () =>{
-        deleteModalStory();
+    const handleDelete = async () =>{
+        await deleteModalStory();
         setModalStory(null);
+
     }
 
-    const handleStatusChange = (e) => {
+    const handleStatusChange = async (e) => {
         let newStatus = e.target.innerText.toLowerCase();
         setModalStory(prev =>
         ({
@@ -48,7 +49,7 @@ const StoryModal = ({ modalStory, setModalStory, updateModalStory, deleteModalSt
         }))
         setDropdownHidden(prev => !prev)
         colorPicker(newStatus)
-        updateModalStory(modalStory)
+        await updateModalStory(modalStory)
     }
 
     const handleDropdownRef = (e) =>{
@@ -74,7 +75,7 @@ const StoryModal = ({ modalStory, setModalStory, updateModalStory, deleteModalSt
         >
             <div class="relative py-10 w-8/12  m-auto flex-col rounded-sm shadow-lg flex text-center bg-white border-solid" onClick={handleDropdownRef} >
                 <div className='modal-head flex flex-row justify-end space-x-7 px-10' >
-                   <BiTrash onClick={handleDelete} size={20}/>
+                   <BiTrash className='cursor-pointer hover:bg-gray-300 ' onClick={handleDelete} size={20}/>
                    <GrClose className='cursor-pointer hover:bg-gray-300 ' size={20} onClick={()=>setModalStory(null)} />
                 </div>
                 <div className='modal-body flex flex-row ' >

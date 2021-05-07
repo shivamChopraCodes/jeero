@@ -11,7 +11,7 @@ const Homepage = () => {
       setdashboards(()=>getDashboards(snapshot)) ;
     })
   },[])
-  console.log(dashboards)
+  
 
 
     return (

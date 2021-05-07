@@ -7,7 +7,8 @@ const NewStory = ({ boardId, setCreatingStory }) => {
     const [newStory, setNewStory] = useState(null);
 
     const closeModal = (e) => {
-        modalRef.current === e.target && console.log();
+        // modalRef.current === e.target
+        
     }
     const handleSave = async () => {
         if( !newStory || !newStory.name || !newStory.description || !newStory.createdBy || !newStory.assignedTo ) return alert('Please fill all details');

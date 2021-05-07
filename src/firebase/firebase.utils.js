@@ -5,18 +5,38 @@ import Config from './firebase.config';
 
 
 firebase.initializeApp(Config);
-
-export const logData = async () => {
-  let dashboard;
-  const collection = firestore.collection('dashboards');
-  await collection.get().then(data => {
-    console.log(data.docs[1].data(), data.docs)
-    dashboard = data.docs[1].id;
-  });
-  console.log(dashboard);
-  const collec = firestore.collection(`dashboards/${dashboard}/stories`);
-  await collec.get().then(data => console.log(data.docs[0].data()))
+const createFirebaseTimestamp = () => {
+  return firebase.firestore.Timestamp.fromDate(new Date())
 }
+
+let date = createFirebaseTimestamp();
+
+export const createUserProfileDocument = async (userAuth, additionalData)=>{
+  if(!userAuth) return;
+  
+  const userRef = firestore.doc(`users/${userAuth.uid}`);
+
+  const snapShot = await userRef.get();
+
+  if(!snapShot.exists){
+    const { displayName , email } = userAuth;
+    const createdAt = date;
+
+    try {
+
+      await userRef.set({
+        displayName,
+        email,
+        createdAt,
+        ...additionalData
+      })
+      
+    } catch (error) {
+      
+    }
+  }
+  return userRef;
+}; 
 
 export const getDashboards = (dashboards) => {
   let newArray = dashboards.docs.map(doc => {
@@ -31,24 +51,20 @@ export const getDashboards = (dashboards) => {
 
 
 export const getStories = (stories) => {
-  console.log(stories);
+  
   let storiesArray = stories.docs.map(doc => ({
     id: doc.id,
     ...doc.data()
   }));
-  console.log(storiesArray);
+  
   return storiesArray
 }
 
 
-const createFirebaseTimestamp = () => {
-  return firebase.firestore.Timestamp.fromDate(new Date())
-}
 
-let date = createFirebaseTimestamp();
 
 export const setUpData = async (dashboard) => {
-  console.log(dashboard);
+  
   let count = 1
   let collectionRef = firestore.collection(`dashboards/${dashboard}/stories`);
   let batch = firestore.batch();
@@ -79,4 +95,9 @@ export const setUpData = async (dashboard) => {
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+
+const provider = new firebase.auth.GoogleAuthProvider();
+provider.setCustomParameters({ prompt: 'select_account' });
+export const signInWithGoogle = ()=> auth.signInWithPopup(provider);
+
 export default firebase;

@@ -15,9 +15,9 @@ const StoriesPage = ({ match, history }) => {
     const [creatingStory, setCreatingStory] = useState(false)
 
 
-    console.log(match.params.id);
-    console.log(stories);
-    console.log(modalStory)
+    
+    
+    
 
     function allowDrop(allowdropevent) {
         allowdropevent.preventDefault();
@@ -39,8 +39,8 @@ const StoriesPage = ({ match, history }) => {
     const updateModalStory = async (story) => {
         if (!currentBoard) return;
         let { id, ...storyData } = story
-        console.log(`${currentBoard.id}  ${id}`);
-        console.log(storyData);
+        
+        
         await firestore.doc(`dashboards/${currentBoard.id}/stories/${id}`).set({ ...storyData })
     }
 
@@ -52,7 +52,7 @@ const StoriesPage = ({ match, history }) => {
 
 
     useEffect(() => {
-        console.log('I ran');
+        
         let dashboardNameRef = firestore.doc(`dashboards/${match.params.id}`);
         dashboardNameRef.get().then(async data => setCurrentBoard(() => ({
             id: match.params.id,
@@ -78,7 +78,7 @@ const StoriesPage = ({ match, history }) => {
 
                    <div className=' flex flex-col bg-gray-300 w-1/4 mx-2 py-2 px-2 items-center' >
                      <p className='text-lg text-gray-700 font-medium text-center w-full' >New</p>
-                    <div className='w-full h-96  ' onDragOver={(even) => allowDrop(even)} onDrop={(even) => drop(even,'new')}  
+                    <div className='w-full min-h-full ' onDragOver={(even) => allowDrop(even)} onDrop={(even) => drop(even,'new')}  
                     >
                     {
                         stories.filter(story=> story.status === 'new').map(story =>
@@ -90,7 +90,7 @@ const StoriesPage = ({ match, history }) => {
                 </div>
                 <div className=' flex flex-col bg-gray-300 w-1/4  mx-2 py-2 px-2 items-center' >
                      <p className='text-lg text-gray-700 font-medium text-center w-full' >In Progress</p>
-                    <div className='w-full h-96' onDragOver={(even) => allowDrop(even)} onDrop={(even) => drop(even,'in progress')} >
+                    <div className='w-full min-h-full ' onDragOver={(even) => allowDrop(even)} onDrop={(even) => drop(even,'in progress')} >
                     {
                         stories.filter(story=> story.status ==='in progress').map(story =>
                             <StoryPreview key={story.id} story={story} setModalStory={setModalStory} />
@@ -99,9 +99,9 @@ const StoriesPage = ({ match, history }) => {
                     }
                     </div>
                 </div>
-                <div className=' flex flex-col bg-gray-300 w-1/4 mx-2 py-2 px-2 items-center' >
+                <div className=' flex flex-col bg-gray-300 w-1/4 mx-2 py-2 px-2 items-center ' >
                      <p className='text-lg text-gray-700 font-medium text-center w-full' >Blocked</p>
-                    <div className='w-full h-96' onDragOver={(even) => allowDrop(even)} onDrop={(even) => drop(even,'blocked')}  
+                    <div className='w-full min-h-full ' onDragOver={(even) => allowDrop(even)} onDrop={(even) => drop(even,'blocked')}  
                     >
                     {
                         stories.filter(story=> story.status ==='blocked').map(story =>
@@ -113,7 +113,7 @@ const StoriesPage = ({ match, history }) => {
                 </div>
                 <div className=' flex flex-col max-h-screen bg-gray-300 w-1/4 mx-2 py-2 px-2 items-center' >
                      <p className='text-lg text-gray-700 font-medium text-center w-full' >Completed</p>
-                    <div className='w-full h-96 ' onDragOver={(even) => allowDrop(even)} onDrop={(even) => drop(even,'completed')}  
+                    <div className='w-full min-h-full ' onDragOver={(even) => allowDrop(even)} onDrop={(even) => drop(even,'completed')}  
                     >
                     {
                         stories.filter(story=> story.status ==='completed').map(story =>

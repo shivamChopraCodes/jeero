@@ -28,7 +28,7 @@ const NewComment = ({updateModalStory}) =>{
             time : ''
         })
         setIsFocused(prev => !prev)
-        console.log(modalStory);
+        
         // updateModalStory(modalStory)
 
     }
